@@ -1,0 +1,41 @@
+{
+  "name": "RENAME-ME",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "next start",
+    "dev:backend": "node services/pocketbase/runPocketbase.mjs",
+    "dev:web": "turbo dev -p 3003",
+    "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev:web\"",
+    "lint": "turbo lint",
+    "typegen": "npx pocketbase-typegen --db ./services/pocketbase/pb_data/data.db --out lib/pocketbase-types.ts",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
+    "pocketbase-typegen": "^1.5.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "turbo": "^2.9.18",
+    "typescript": "^5",
+    "vitest": "^4.1.10"
+  },
+  "packageManager": "npm@11.16.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "concurrently": "^10.0.3",
+    "dotenv": "^17.4.2",
+    "pocketbase": "^0.27.0"
+  }
+}
