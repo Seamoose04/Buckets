@@ -1,19 +1,23 @@
 /// <reference path="../pb_data/types.d.ts" />
 
 const generateTypes = (e) => {
-  console.log("Collection changed - Running type generation...")
-  const cmd = $os.cmd(
-    "npx",
-    "pocketbase-typegen",
-    "--db",
-    "pb_data/data.db",
-    "--out",
-    "../client/src/pocketbase-types.ts"
-  )
-  const result = toString(cmd.output())
-  console.log(result)
-
-  e.next()
+	console.log("Collection changed - Running type generation...")
+	try {
+		$os.mkdirAll("../../../packages/pocketbase/src", 0o755)
+		const cmd = $os.cmd(
+			"npx",
+			"pocketbase-typegen",
+			"--db",
+			"pb_data/data.db",
+			"--out",
+			"../../../packages/pocketbase/src/generated-types.ts"
+		)
+		const result = toString(cmd.output())
+		console.log(result)
+	} catch (err) {
+		console.log("Type generation failed (non-fatal):", err)
+	}
+	e.next()
 }
 
 onCollectionAfterCreateSuccess(generateTypes)

@@ -1,5 +1,6 @@
+#!/bin/bash
 
-top on error
+# stop on error
 set -e
 
 # Define variables

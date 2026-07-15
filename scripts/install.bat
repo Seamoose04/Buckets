@@ -10,25 +10,25 @@ set TARGET_DIR=services\pocketbase
 echo Downloading PocketBase %VERSION%...
 curl -L -o "%FILENAME%" "%DOWNLOAD_URL%"
 if errorlevel 1 (
-	    echo Failed to download PocketBase.
-		    exit /b 1
-		)
+	echo Failed to download PocketBase.
+	exit /b 1
+)
 
-		echo Unzipping...
-		if not exist "%TARGET_DIR%" mkdir "%TARGET_DIR%"
-		powershell -Command "Expand-Archive -Path '%FILENAME%' -DestinationPath '%TARGET_DIR%' -Force"
-		if errorlevel 1 (
-			    echo Failed to unzip.
-				    exit /b 1
-				)
+echo Unzipping...
+if not exist "%TARGET_DIR%" mkdir "%TARGET_DIR%"
+powershell -Command "Expand-Archive -Path '%FILENAME%' -DestinationPath '%TARGET_DIR%' -Force"
+if errorlevel 1 (
+	echo Failed to unzip.
+	exit /b 1
+)
 
-				:: Clean up
-				del "%FILENAME%"
+:: Clean up
+del "%FILENAME%"
 
-				echo Installed PocketBase %VERSION% to .\%TARGET_DIR%\pocketbase.exe
+echo Installed PocketBase %VERSION% to .\%TARGET_DIR%\pocketbase.exe
 
-				:: Install npm packages
-				npm install
-				echo Installed npm packages
+:: Install npm packages
+npm install
+echo Installed npm packages
 
-				endlocal
+endlocal
