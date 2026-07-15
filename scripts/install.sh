@@ -4,7 +4,7 @@
 set -e
 
 # Define variables
-VERSION="0.36.5"
+VERSION="0.39.6"
 FILENAME="pocketbase_${VERSION}_linux_amd64.zip"
 DOWNLOAD_URL="https://github.com/pocketbase/pocketbase/releases/download/v${VERSION}/${FILENAME}"
 TARGET_DIR="services/pocketbase"

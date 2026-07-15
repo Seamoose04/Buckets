@@ -10,7 +10,7 @@
     "dev:web": "turbo dev -p 3003",
     "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev:web\"",
     "lint": "turbo lint",
-    "typegen": "npx pocketbase-typegen --db ./services/pocketbase/pb_data/data.db --out lib/pocketbase-types.ts",
+    "typegen": "npx pocketbase-typegen --db ./services/pocketbase/pb_data/data.db --out packages/pocketbase/src/generated-types.ts",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
