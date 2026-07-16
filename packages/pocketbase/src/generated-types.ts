@@ -11,6 +11,17 @@ export const Collections = {
 	Mfas: "_mfas",
 	Otps: "_otps",
 	Superusers: "_superusers",
+	AccountabilityPartners: "accountability_partners",
+	Accounts: "accounts",
+	Buckets: "buckets",
+	BudgetCycles: "budget_cycles",
+	Glasses: "glasses",
+	Income: "income",
+	RolloverAllocations: "rollover_allocations",
+	SavingsGoals: "savings_goals",
+	SubPurchases: "sub_purchases",
+	Transactions: "transactions",
+	Transfers: "transfers",
 	Users: "users",
 } as const
 export type Collections = typeof Collections[keyof typeof Collections]
@@ -93,6 +104,135 @@ export type SuperusersRecord = {
 	verified?: boolean
 }
 
+export type AccountabilityPartnersRecord = {
+	active?: boolean
+	id: string
+	imessage_handle: string
+	name: string
+}
+
+export const AccountsAccountTypeOptions = {
+	"checkings": "checkings",
+	"savings": "savings",
+} as const
+export type AccountsAccountTypeOptions = typeof AccountsAccountTypeOptions[keyof typeof AccountsAccountTypeOptions]
+export type AccountsRecord = {
+	account_type: AccountsAccountTypeOptions
+	id: string
+	institution_name: string
+	plaid_access_token: string
+	plaid_account_id: string
+	plaid_item_id: string
+}
+
+export type BucketsRecord = {
+	color: string
+	id: string
+	name: string
+}
+
+export const BudgetCyclesStatusOptions = {
+	"active": "active",
+	"closed": "closed",
+} as const
+export type BudgetCyclesStatusOptions = typeof BudgetCyclesStatusOptions[keyof typeof BudgetCyclesStatusOptions]
+export type BudgetCyclesRecord = {
+	end_date: IsoDateString
+	id: string
+	rollover_amount?: number
+	start_date: IsoDateString
+	status: BudgetCyclesStatusOptions
+}
+
+export type GlassesRecord = {
+	allocation: number
+	archived?: boolean
+	bucket: RecordIdString
+	guideline_percent: number
+	id: string
+	name: string
+}
+
+export const IncomeTypeOptions = {
+	"base": "base",
+	"bonus": "bonus",
+} as const
+export type IncomeTypeOptions = typeof IncomeTypeOptions[keyof typeof IncomeTypeOptions]
+export type IncomeRecord = {
+	amount: number
+	amount_allocated?: number
+	date?: IsoDateString
+	id: string
+	source?: string
+	type: IncomeTypeOptions
+}
+
+export type RolloverAllocationsRecord = {
+	amount: number
+	budget_cycle: RecordIdString
+	id: string
+	savings_goal: RecordIdString
+}
+
+export type SavingsGoalsRecord = {
+	archived?: boolean
+	current_amount: number
+	deadline?: IsoDateString
+	id: string
+	name: string
+	target_amount?: number
+}
+
+export type SubPurchasesRecord = {
+	amount: number
+	glass: RecordIdString
+	id: string
+	note?: string
+	transaction: RecordIdString
+}
+
+export const TransactionsSubscriptionSourceOptions = {
+	"auto": "auto",
+	"manual": "manual",
+	"none": "none",
+} as const
+export type TransactionsSubscriptionSourceOptions = typeof TransactionsSubscriptionSourceOptions[keyof typeof TransactionsSubscriptionSourceOptions]
+export type TransactionsRecord = {
+	account: RecordIdString
+	amount: number
+	date: IsoDateString
+	id: string
+	is_subscription?: boolean
+	merchant: string
+	needs_split?: boolean
+	plaid_category: string
+	plaid_transaction_id: string
+	subscription_source?: TransactionsSubscriptionSourceOptions
+}
+
+export const TransfersScopeOptions = {
+	"same_bucket": "same_bucket",
+	"cross_bucket": "cross_bucket",
+} as const
+export type TransfersScopeOptions = typeof TransfersScopeOptions[keyof typeof TransfersScopeOptions]
+
+export const TransfersDirectionOptions = {
+	"need_to_want": "need_to_want",
+	"want_to_need": "want_to_need",
+} as const
+export type TransfersDirectionOptions = typeof TransfersDirectionOptions[keyof typeof TransfersDirectionOptions]
+export type TransfersRecord = {
+	accountability_partner_notified?: RecordIdString
+	amount: number
+	date: IsoAutoDateString
+	direction: TransfersDirectionOptions
+	from: RecordIdString
+	id: string
+	reason?: string
+	scope: TransfersScopeOptions
+	to: RecordIdString
+}
+
 export type UsersRecord = {
 	avatar?: FileNameString
 	created: IsoAutoDateString
@@ -112,6 +252,17 @@ export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRec
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type AccountabilityPartnersResponse<Texpand = unknown> = Required<AccountabilityPartnersRecord> & BaseSystemFields<Texpand>
+export type AccountsResponse<Texpand = unknown> = Required<AccountsRecord> & BaseSystemFields<Texpand>
+export type BucketsResponse<Texpand = unknown> = Required<BucketsRecord> & BaseSystemFields<Texpand>
+export type BudgetCyclesResponse<Texpand = unknown> = Required<BudgetCyclesRecord> & BaseSystemFields<Texpand>
+export type GlassesResponse<Texpand = unknown> = Required<GlassesRecord> & BaseSystemFields<Texpand>
+export type IncomeResponse<Texpand = unknown> = Required<IncomeRecord> & BaseSystemFields<Texpand>
+export type RolloverAllocationsResponse<Texpand = unknown> = Required<RolloverAllocationsRecord> & BaseSystemFields<Texpand>
+export type SavingsGoalsResponse<Texpand = unknown> = Required<SavingsGoalsRecord> & BaseSystemFields<Texpand>
+export type SubPurchasesResponse<Texpand = unknown> = Required<SubPurchasesRecord> & BaseSystemFields<Texpand>
+export type TransactionsResponse<Texpand = unknown> = Required<TransactionsRecord> & BaseSystemFields<Texpand>
+export type TransfersResponse<Texpand = unknown> = Required<TransfersRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -122,6 +273,17 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	accountability_partners: AccountabilityPartnersRecord
+	accounts: AccountsRecord
+	buckets: BucketsRecord
+	budget_cycles: BudgetCyclesRecord
+	glasses: GlassesRecord
+	income: IncomeRecord
+	rollover_allocations: RolloverAllocationsRecord
+	savings_goals: SavingsGoalsRecord
+	sub_purchases: SubPurchasesRecord
+	transactions: TransactionsRecord
+	transfers: TransfersRecord
 	users: UsersRecord
 }
 
@@ -131,6 +293,17 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	accountability_partners: AccountabilityPartnersResponse
+	accounts: AccountsResponse
+	buckets: BucketsResponse
+	budget_cycles: BudgetCyclesResponse
+	glasses: GlassesResponse
+	income: IncomeResponse
+	rollover_allocations: RolloverAllocationsResponse
+	savings_goals: SavingsGoalsResponse
+	sub_purchases: SubPurchasesResponse
+	transactions: TransactionsResponse
+	transfers: TransfersResponse
 	users: UsersResponse
 }
 
