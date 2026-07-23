@@ -1,4 +1,4 @@
-import { TypedPocketBase } from '@repo/pocketbase';
+import { AccountsResponse, Collections, TypedPocketBase } from '@repo/pocketbase';
 import PocketBase from 'pocketbase';
 
 let cachedPB: Promise<TypedPocketBase> | undefined = undefined;
@@ -31,4 +31,18 @@ export function GetPBAdmin(): Promise<TypedPocketBase> {
 	}
 
 	return cachedPB;
+}
+
+export async function Upsert<T>(collection: Collections, filter: string, data: Partial<T>): Promise<void> {
+	const pbAdmin: TypedPocketBase = await GetPBAdmin();
+	try {
+		const response = await pbAdmin.collection(collection).getFirstListItem(filter);
+		await pbAdmin.collection(collection).update(response.id, data);
+	} catch (error: any) {
+		if (error.status === 404) {
+			await pbAdmin.collection(collection).create(data);
+		} else {
+			throw error;
+		}
+	}
 }
