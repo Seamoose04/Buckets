@@ -112,7 +112,7 @@ export type AccountabilityPartnersRecord = {
 }
 
 export const AccountsAccountTypeOptions = {
-	"checkings": "checkings",
+	"checking": "checking",
 	"savings": "savings",
 } as const
 export type AccountsAccountTypeOptions = typeof AccountsAccountTypeOptions[keyof typeof AccountsAccountTypeOptions]

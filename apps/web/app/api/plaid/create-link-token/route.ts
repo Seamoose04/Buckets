@@ -1,7 +1,7 @@
 import { plaidClient } from "@/lib/plaid";
 import { CountryCode, Products } from "plaid";
 
-export async function POST() {
+export async function POST(): Promise<Response> {
 	try {
 		const linkToken = await plaidClient.linkTokenCreate({
 			client_name: 'Buckets',
